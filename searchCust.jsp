@@ -1,31 +1,26 @@
 ﻿<%@ page import="java.sql.*" contentType="text/html;charset=EUC-KR"%>
 <%
- Class.forName("oracle.jdbc.driver.OracleDriver");
- String url="jdbc:oracle:thin:@localhost:1521:XE"; 
-           /* 11g express edition은 orcl 대신 XE를 입력한다. */
- Connection dbconn=DriverManager.getConnection(url, "U_BANK", "mybank");
- Statement stmt = dbconn.createStatement();
- ResultSet myResultSet=stmt.executeQuery("SELECT * FROM B_CUSTOMERS");
+  Class.forName("oracle.jdbc.driver.OracleDriver");
+  String url="jdbc:oracle:thin:@localhost:1521:XE";
+		/* 11g express edition은 orcl 대신 XE를 입력한다. */
+  Connection dbconn=DriverManager.getConnection(url, "U_BANK", "mybank");
+  Statement stmt = dbconn.createStatement();
+  String searchname =request.getParameter("searchname");
+  ResultSet myResultSet=stmt.executeQuery("SELECT * FROM B_CUSTOMERS WHERE cust_name LIKE '%"+searchname+"%'");
 %>
-<html>
 
+<html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=euc-kr">
-<title>** 회원 정보 조회 **</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>searchCust.jsp</title>
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
-
-<form method="get" action="searchCust.jsp">
-    고객명 검색 : <input type="text" name="searchname">
-    <input type="submit" value="검색">
-</form>
-
 <table border="1" cellspacing="0" width="645" bordercolor="#9AD2F7" bordercolordark="white" bordercolorlight="#B9E0FA">
     <tr>
         <td width="60" height="20" bgcolor="#D2E9F9">
             <p align="center">
-            <span style="font-size:8pt;"><b>고객명</b></span></p>
+            <span style="font-size:8pt;"><b>고객명<%=searchname%></b></span></p>
         </td>
         <td width="150" height="20" bgcolor="#D2E9F9">
             <p align="center">
